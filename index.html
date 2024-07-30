@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./layout.css">
+    <link rel="stylesheet" href="./icons/css/all.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Watchlist</title>
+</head>
+<body>
+    <header class="body-header">
+        <h1>Find your film</h1>
+        <h2><a href="./watchList.html">My Watchlist</a></h2>
+    </header>
+    <main>
+        <form action="submit" id="search-form">
+            <span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" 
+                id="search-input" placeholder="search for a movie">
+            </span>
+            <button type="submit" id="search-btn">Search</button>
+        </form>
+        <div class="film-list" id="film-list-from-API">
+            <div class="place-holder">
+                <i class="fa-solid fa-film"></i>
+                <p>Start exploring</p>
+            </div>
+           <!-- Movie Lists will be displayed here -->
+        </div>
+    </main>
+    <script src="./index.js" type="module"></script>
+</body>
+</html>

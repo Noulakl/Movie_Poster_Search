@@ -1,0 +1,63 @@
+/* flex containers */
+.movie,
+.movie-header,
+.details{
+    
+    display: flex;
+}
+#movie-header{
+    align-items: center;
+}
+header{  
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+/* Grid containers */
+main{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.25rem 1fr 1.25rem;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    ".... form ...."
+    "... film ...";
+}
+form{ 
+    align-items: center;
+    justify-content: space-between;
+    height: 2.5rem;
+    position: absolute;
+    top: -1.2rem;
+    width: 100%;
+    grid-area: form;
+}
+
+.film-list{
+position: relative;
+grid-area: film;
+}
+
+/* movie container */
+.place-holder{
+    text-align: center;
+    margin: 12.7em auto 0 auto;
+}
+
+.movie,
+.details{
+    align-items: center;
+}
+.movie{
+    margin: 2rem 0 1.25em 0;
+    gap: 1em;
+}
+.details{
+    justify-content: space-between;
+    margin-bottom: .88em ;
+}
+@media (min-width: 1024px) {
+    main{
+        grid-template-columns: 15rem 1fr 15rem;
+    }
+}

@@ -1,0 +1,144 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+html,
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
+header.body-header{
+    background-image: url('./img/headerBackground.png');
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 20vh;
+}
+
+form{
+    background-color: #2E2E2F;
+    width: 70vw;
+    border-radius: .375rem;
+    margin: auto;
+    padding-left: .812rem ;
+}
+
+form input,
+form button,
+form i{
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+}
+form input:focus{
+    outline: none;
+}
+#search-input{
+    height: 100%;
+    width: calc(100% - 5.69rem);
+    padding-left: .5em;
+    display: inline-block;
+}
+
+hr{
+    margin: 0;
+    color:  #2C2C2C;
+    background-color: #2C2C2C;
+}
+/* Typo */
+h1{
+    margin: 0;
+    font-size: 2.65rem;
+    font-weight: 700;
+}
+
+header a,
+.place-holder a,
+#plus-holder{
+    font-size: .875rem;
+    text-decoration: none;
+    color: white;
+}
+
+.place-holder a{
+    font-weight:600;
+    letter-spacing: .2em;
+    line-height: 3em;
+}
+main form,
+main form i{
+    color: #9CA3AF;
+}
+
+.place-holder i,
+.place-holder p,
+.movie p,
+.movie h2,
+.movie h3{
+    margin: 0;
+}
+.place-holder i,
+.place-holder p{
+    color: #2E2E2F;
+}
+.place-holder i{
+    font-size: 3.81rem;
+}
+.place-holder p{
+    font-size: 1.125rem;
+    margin-top: 0.4861em;
+    font-weight: 600;
+}
+#movie-header h2,
+#movie-header i,
+#movie-header p{
+    font-size: 1.125rem;
+}
+
+#movie-header i{
+    color: #FEC654;
+    margin: 0 .285em;
+}
+
+#movie-header{
+    margin-bottom: 0.611em ;
+}
+.details {
+    font-size: .6rem;
+}
+
+.plot{
+    font-size: .9rem;
+    color: #A5A5A5;
+}
+/* buttons */
+form button{
+    height: 100%;
+    transition: all .2s;
+    display: inline-block;
+    background-color: #4B4B4B;
+    border-top-right-radius: .375rem ;
+    border-bottom-right-radius: .375rem ;
+}
+
+button:hover,
+button:focus{
+    transform: scale(110%);
+    cursor: pointer;
+}
+
+.details button{
+    background: none;
+    border: none;
+    border-radius: 50%;
+}
+/* Images */
+.movie img{
+    width: 6.18rem;
+    height: 100%;
+    border-radius: 0.145rem;
+}
