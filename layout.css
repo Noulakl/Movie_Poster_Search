@@ -43,7 +43,9 @@ grid-area: film;
     text-align: center;
     margin: 12.7em auto 0 auto;
 }
-
+.description{
+    width: 100%;
+}
 .movie,
 .details{
     align-items: center;
@@ -51,6 +53,7 @@ grid-area: film;
 .movie{
     margin: 2rem 0 1.25em 0;
     gap: 1em;
+    
 }
 .details{
     justify-content: space-between;

@@ -1,27 +1,35 @@
+// Fetching DOM elements
 const form = document.getElementById('search-form')
 const inputEl = document.getElementById('search-input')
 const filmListContainer =document.getElementById('film-list-from-API')
-
+//  event listeners
 form.addEventListener('submit', async function(e){
-    e.preventDefault()
     let title = inputEl.value
-    findMoviesID(title)
-    title = ''
+    e.preventDefault()
+    renderMovie(title)    
+})
+document.addEventListener('click', e => {
+   if(e.target.dataset.readmore){
+    console.log('readMore')
+    readMore(e.target.dataset.readmore)
+   } else if (e.target.dataset.add){
+    console.log('add')
+    pushToLocalStorage(e.target.dataset.add)
+   }
 })
 
- async function findMoviesID(title){
+// Async functions dealing with APIs
+ async function renderMovie(title){
     const response = await fetch (`http://www.omdbapi.com/?apikey=9a04ff24&s=${title}`)
     const data = await response.json()
     const movies = await data.Search
     const movieID =  await movies.map( movie => movie.imdbID)
     const movieObj =  await Promise.all(movieID.map(async id => getMoviesData(id) ))
-
     const moviesHtml = movieObj.map(movie =>{
-        const{Title, Runtime,imdbRating,Plot,Poster,Genre,imdbID} = movie
+        const {Title, Runtime,imdbRating,Plot,Poster,Genre,imdbID} = movie
         return      `
         <div class="movie">
             <img src="${Poster}" alt="">
-
             <div class="description">
                 <div class="movie-header" id="movie-header">
                     <h2 class="title">${Title}</h2>
@@ -31,73 +39,44 @@ form.addEventListener('submit', async function(e){
                 <div class="details">
                     <h3>${Runtime}</h3>
                     <h3>${Genre}</h3>
-                    <button id='${imdbID}'><i class="fa-solid fa-circle-plus"></i> Watchist</button>
+                    <button data-add='${imdbID}'><i class="fa-solid fa-circle-plus"></i> Watchist</button>
                 </div>
-                <p class="plot">${Plot}</p>
-
+                <p class="plot" id='plot${imdbID}'>${Plot}
+                <button class="read-more" data-readmore='${imdbID}'>..Read more</button>
+                </p>
             </div>
         </div>
         <hr>
-        
-        `
-
+       `
     }).join('')
     filmListContainer.innerHTML = moviesHtml
+    return movieObj
 }
 
 async function getMoviesData(id){
-    const response = await fetch(`http://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=short`)
-    const data = await response.json()
-    return data 
+        const response = await fetch(`http://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=short`)
+        const data = await response.json()
+        return data 
 }
-                 
+    
+async function readMore(id){
+    const response = await fetch(`http://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=full`)
+    const data = await response.json()
+    console.log(data)
+    const plotParagraph = document.getElementById(`plot${data.imdbID}`)
+    plotParagraph.innerHTML = data.Plot
+}
 
+// LocalStorage
+async function pushToLocalStorage(id){
+    const movieObject = await getMoviesData(id)
+    if(localStorage.getItem('watchList')){
+        const moviesInLocal = JSON.parse(localStorage.getItem('watchList'))
+        moviesInLocal.push(movieObject)
+        localStorage.setItem('watchList', JSON.stringify(moviesInLocal))
+    } else{
+        const movies = [movieObject]
+        localStorage.setItem('watchList', JSON.stringify(movies))
+    }
+}
 
-/* 
-from the API
-
-<div class="movie">
-<img src="./img/image 33.png" alt="">
-
-<div class="description">
-    <div class="movie-header" id="movie-header">
-        <h2 class="title">TITLE</h2>
-        <i class="fa-solid fa-star"></i>
-        <p >RATINGS</p>
-    </div>
-    <div class="details">
-        <h3>RUNTIME</h3>
-        <h3>GENRE</h3>
-        <button id=''><i class="fa-solid fa-circle-plus"></i> Watchist</button>
-    </div>
-    <p class="plot">PLOT</p>
-
-</div>
-</div>
-<hr> */
-
-/* 
-from the LocalStorage
-
-<div class="movie">
-<img src="./img/image 33.png" alt="">
-
-<div class="description">
-    <div class="movie-header" id="movie-header">
-        <h2 class="title">Blade Runner</h2>
-        <i class="fa-solid fa-star"></i>
-        <p >8.1</p>
-    </div>
-    <div class="details">
-        <h3>116 min</h3>
-        <h3>Drama, Mystery, Sci-fi</h3>
-        <button><i class="fa-solid fa-circle-minus"></i> Remove</button>
-    </div>
-    <p class="plot">Lorem ipsum dolor sit amet, 
-        consectetuer adipiscing elit. 
-        Maecenas porttitor congue massa. 
-    </p>
-
-</div>
-</div>
-<hr> */

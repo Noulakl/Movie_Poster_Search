@@ -136,6 +136,13 @@ button:focus{
     border: none;
     border-radius: 50%;
 }
+
+.read-more{
+    background: none;
+    border: none;
+    color: #fff;
+}
+
 /* Images */
 .movie img{
     width: 6.18rem;
