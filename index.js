@@ -6,7 +6,11 @@ const filmListContainer =document.getElementById('film-list-from-API')
 form.addEventListener('submit', async function(e){
     let title = inputEl.value
     e.preventDefault()
-    renderMovie(title)    
+    if(title){
+        renderMovie(title)    
+    } else{
+        alert('Please enter a movie title')
+    }
 })
 document.addEventListener('click', e => {
    if(e.target.dataset.readmore){
@@ -22,35 +26,45 @@ document.addEventListener('click', e => {
  async function renderMovie(title){
     const response = await fetch (`http://www.omdbapi.com/?apikey=9a04ff24&s=${title}`)
     const data = await response.json()
-    const movies = await data.Search
-    const movieID =  await movies.map( movie => movie.imdbID)
-    const movieObj =  await Promise.all(movieID.map(async id => getMoviesData(id) ))
-    const moviesHtml = movieObj.map(movie =>{
-        const {Title, Runtime,imdbRating,Plot,Poster,Genre,imdbID} = movie
-        return      `
-        <div class="movie">
-            <img src="${Poster}" alt="">
-            <div class="description">
-                <div class="movie-header" id="movie-header">
-                    <h2 class="title">${Title}</h2>
-                    <i class="fa-solid fa-star"></i>
-                    <p >${imdbRating}</p>
+    try{
+        const movies = await data.Search
+        const movieID =  await movies.map( movie => movie.imdbID)
+        const movieObj =  await Promise.all(movieID.map(async id => getMoviesData(id) ))
+        const moviesHtml = movieObj.map(movie =>{
+            const {Title, Runtime,imdbRating,Plot,Poster,Genre,imdbID} = movie
+            return      `
+            <div class="movie">
+                <img src="${Poster}" alt="">
+                <div class="description">
+                    <div class="movie-header" id="movie-header">
+                        <h2 class="title">${Title}</h2>
+                        <i class="fa-solid fa-star"></i>
+                        <p >${imdbRating}</p>
+                    </div>
+                    <div class="details">
+                        <h3>${Runtime}</h3>
+                        <h3>${Genre}</h3>
+                        <button data-add='${imdbID}'><i class="fa-solid fa-circle-plus"></i> Watchist</button>
+                    </div>
+                    <p class="plot" id='plot${imdbID}'>${Plot}
+                    <button class="read-more" data-readmore='${imdbID}'>..Read more</button>
+                    </p>
                 </div>
-                <div class="details">
-                    <h3>${Runtime}</h3>
-                    <h3>${Genre}</h3>
-                    <button data-add='${imdbID}'><i class="fa-solid fa-circle-plus"></i> Watchist</button>
-                </div>
-                <p class="plot" id='plot${imdbID}'>${Plot}
-                <button class="read-more" data-readmore='${imdbID}'>..Read more</button>
-                </p>
             </div>
+            <hr>
+           `
+        }).join('')
+        filmListContainer.innerHTML = moviesHtml
+        return movieObj
+
+    } catch (err){
+        filmListContainer.innerHTML = `
+        <div class="place-holder">
+                <i class="fa-regular fa-face-frown-open"></i>
+                <p>Sorry, could not find that movie</p>
         </div>
-        <hr>
-       `
-    }).join('')
-    filmListContainer.innerHTML = moviesHtml
-    return movieObj
+        `
+    }
 }
 
 async function getMoviesData(id){
@@ -74,6 +88,7 @@ async function pushToLocalStorage(id){
         const moviesInLocal = JSON.parse(localStorage.getItem('watchList'))
         moviesInLocal.push(movieObject)
         localStorage.setItem('watchList', JSON.stringify(moviesInLocal))
+        alert('You can now check it in your watch list')
     } else{
         const movies = [movieObject]
         localStorage.setItem('watchList', JSON.stringify(movies))
