@@ -40,9 +40,14 @@ form input:focus{
 }
 #search-input{
     height: 100%;
-    width: calc(100% - 5.69rem);
     padding-left: .5em;
     display: inline-block;
+    position: relative;
+}
+button#search-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 hr{
