@@ -24,7 +24,7 @@ document.addEventListener('click', e => {
 
 // Async functions dealing with APIs
  async function renderMovie(title){
-    const response = await fetch (`http://www.omdbapi.com/?apikey=9a04ff24&s=${title}`)
+    const response = await fetch (`https://www.omdbapi.com/?apikey=9a04ff24&s=${title}`)
     const data = await response.json()
     try{
         const movies = await data.Search
@@ -68,13 +68,13 @@ document.addEventListener('click', e => {
 }
 
 async function getMoviesData(id){
-        const response = await fetch(`http://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=short`)
+        const response = await fetch(`https://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=short`)
         const data = await response.json()
         return data 
 }
     
 async function readMore(id){
-    const response = await fetch(`http://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=full`)
+    const response = await fetch(`https://www.omdbapi.com/?apikey=9a04ff24&i=${id}&plot=full`)
     const data = await response.json()
     console.log(data)
     const plotParagraph = document.getElementById(`plot${data.imdbID}`)
